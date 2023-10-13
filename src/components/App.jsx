@@ -11,6 +11,7 @@ import Root from "./root/Root";
 import ErrorPage from "./pages/ErrorPage";
 import HomePage from "./pages/HomePage/HomePage";
 import CalcPage from './pages/CalculatorPage/CalcPage';
+import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
 
 export default function App() {
 
@@ -27,6 +28,10 @@ export default function App() {
             {
                path: 'calculator',
                element: <CalcPage />
+            },
+            {
+               path: 'signup',
+               element: <RegistrationPage />
             }
          ],    
       },
