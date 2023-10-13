@@ -1,0 +1,205 @@
+.main__calc {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+}
+
+.main__calc--wrapper {
+    padding: 20px;
+    box-shadow: 0 0 5px 4px var(--shadow-color);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.main__calc--wrapper form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.main__calc--wrapper h2,
+.main__calc--wrapper h3 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+// btn
+
+.btn {
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px 10px;
+    background-color: white;
+    width: 100%;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #d3d3d3;
+}
+
+.btn-active {
+    background: var(--main-green);
+    color: white;
+}
+
+.btn-active:hover {
+    --main-green: rgba(13, 82, 13, 0.8);
+    background: var(--main-green);
+}
+
+// input
+
+.calc__input {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    border-bottom: 1px solid var(--shadow-color);
+    gap: 5px;
+}
+
+.calc__input fieldset {
+    border: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+}
+.calc__input select {
+    width: 80%;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.calc__input--radio input {
+    visibility: hidden;
+}
+
+.calc__input--range {
+    width: 400px;
+}
+
+.calc__input--radio img {
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.calc__input--radio.active img {
+    opacity: 1;
+}
+
+.calc__input--value {
+    width: 25px;
+    text-align: end;
+}
+
+// bmi
+
+.bmi__list {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.bmi__indicator {
+    display: block;
+    background-color: var(--shadow-color);
+    width: 70px;
+    height: 15px;
+}
+
+.bmi__list li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.bmi__list li:first-child {
+    .bmi__indicator--active {
+        background-color: red;
+    }
+}
+.bmi__list li:nth-child(2) {
+    .bmi__indicator--active {
+        background-color: green;
+    }
+}
+.bmi__list li:nth-child(3) {
+    .bmi__indicator--active {
+        background-color: yellow;
+    }
+}
+.bmi__list li:nth-child(4) {
+    .bmi__indicator--active {
+        background-color: orange;
+    }
+}
+.bmi__list li:nth-child(5) {
+    .bmi__indicator--active {
+        background-color: red;
+    }
+}
+.bmi__list li:nth-child(6) {
+    .bmi__indicator--active {
+        background-color: red;
+    }
+}
+
+// nutrientss
+.nutrients {
+    padding: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 100px;
+}
+
+.nutrients__chart {
+    width: 200px;
+    height: 200px;
+    background-color: red;
+    border-radius: 50%;
+}
+
+.nutrients__list {
+    min-width: 300px;
+}
+
+.nutrients__list-item {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+
+.nutrients__list-item::before {
+    display: block;
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: black;
+    left: -15px;
+    top: 3px;
+    border-radius: 50%;
+}
+
+.nutrients__list-item:nth-child(1)::before {
+    background-color: rgb(8, 138, 208);
+}
+.nutrients__list-item:nth-child(2)::before {
+    background-color: orange;
+}
+.nutrients__list-item:nth-child(3)::before {
+    background-color: red;
+}
+.nutrients__list-item:nth-child(4)::before {
+    background-color: green;
+}
