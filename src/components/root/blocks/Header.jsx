@@ -31,6 +31,9 @@ export default function Header() {
                   <li className='navbar__item'>
                      <NavLink to='calculator' className='navbar__link'>Calculator</NavLink>
                   </li>
+                  <li className='navbar__item'>
+                     <NavLink to='signup' className='navbar__link'>Sign up</NavLink>
+                  </li>
                </ul>
             </nav>
             
