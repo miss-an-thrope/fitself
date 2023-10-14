@@ -45,16 +45,16 @@ function CalcInput({
             case 1.1:
                 setFatPercentage("5%")
                 break
-            case 1.15:
+            case 1.05:
                 setFatPercentage("15%")
                 break
-            case 1.2:
+            case 1:
                 setFatPercentage("20%")
                 break
-            case 1.25:
+            case 0.95:
                 setFatPercentage("30%")
                 break
-            case 1.3:
+            case 0.9:
                 setFatPercentage("40+%")
                 break
         }
