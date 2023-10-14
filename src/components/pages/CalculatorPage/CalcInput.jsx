@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 function CalcInput({
     inputType,
@@ -30,6 +30,17 @@ function CalcInput({
     }
     function handleRadioInput(e) {
         setInputValue(Number(e.target.getAttribute("data-value")))
+
+        Array.from(e.target.parentElement.parentElement.children).forEach(
+            (img) => {
+                img.children[0].style.opacity = 0.6
+            }
+        )
+        e.target.previousElementSibling.style.opacity = 1
+        calculateCalorieIntake()
+    }
+
+    useEffect(() => {
         switch (inputValue) {
             case 1.1:
                 setFatPercentage("5%")
@@ -47,15 +58,7 @@ function CalcInput({
                 setFatPercentage("40+%")
                 break
         }
-
-        Array.from(e.target.parentElement.parentElement.children).forEach(
-            (img) => {
-                img.children[0].style.opacity = 0.6
-            }
-        )
-        e.target.style.opacity = 1
-        calculateCalorieIntake()
-    }
+    }, [inputValue, fatPercentage])
     return (
         <>
             {(() => {
@@ -124,48 +127,58 @@ function CalcInput({
                                     </label>
                                     <fieldset>
                                         <div className="calc__input--radio">
-                                            <img
-                                                onClick={(e) =>
-                                                    handleRadioInput(e)
-                                                }
+                                            <img src="../../../src/assets/img/fat/1.svg" />
+                                            <input
+                                                type="radio"
+                                                name="fat"
                                                 data-value="1.1"
-                                                src="../../../src/assets/img/fat/1.svg"
+                                                onChange={(e) =>
+                                                    handleRadioInput(e)
+                                                }
                                             />
                                         </div>
                                         <div className="calc__input--radio">
-                                            <img
-                                                onClick={(e) =>
+                                            <img src="../../../src/assets/img/fat/2.svg" />
+                                            <input
+                                                type="radio"
+                                                name="fat"
+                                                data-value="1.05"
+                                                onChange={(e) =>
                                                     handleRadioInput(e)
                                                 }
-                                                data-value="1.15"
-                                                src="../../../src/assets/img/fat/2.svg"
                                             />
                                         </div>
                                         <div className="calc__input--radio">
-                                            <img
-                                                onClick={(e) =>
+                                            <img src="../../../src/assets/img/fat/3.svg" />
+                                            <input
+                                                type="radio"
+                                                name="fat"
+                                                data-value="1"
+                                                onChange={(e) =>
                                                     handleRadioInput(e)
                                                 }
-                                                data-value="1.2"
-                                                src="../../../src/assets/img/fat/3.svg"
                                             />
                                         </div>
                                         <div className="calc__input--radio">
-                                            <img
-                                                onClick={(e) =>
+                                            <img src="../../../src/assets/img/fat/4.svg" />
+                                            <input
+                                                type="radio"
+                                                name="fat"
+                                                data-value="0.95"
+                                                onChange={(e) =>
                                                     handleRadioInput(e)
                                                 }
-                                                data-value="1.25"
-                                                src="../../../src/assets/img/fat/4.svg"
                                             />
                                         </div>
                                         <div className="calc__input--radio">
-                                            <img
-                                                onClick={(e) =>
+                                            <img src="../../../src/assets/img/fat/5.svg" />
+                                            <input
+                                                type="radio"
+                                                name="fat"
+                                                data-value="0.9"
+                                                onChange={(e) =>
                                                     handleRadioInput(e)
                                                 }
-                                                data-value="1.3"
-                                                src="../../../src/assets/img/fat/5.svg"
                                             />
                                         </div>
                                     </fieldset>
@@ -187,10 +200,10 @@ function CalcInput({
                                         name="activity"
                                         id="activity"
                                     >
-                                        <option value="1.2">Low</option>
-                                        <option value="1.4">Medium</option>
-                                        <option value="1.6">High</option>
-                                        <option value="1.8">Very high</option>
+                                        <option value="0.8">Low</option>
+                                        <option value="1">Medium</option>
+                                        <option value="1.2">High</option>
+                                        <option value="1.4">Very high</option>
                                     </select>
                                 </div>
                             </>

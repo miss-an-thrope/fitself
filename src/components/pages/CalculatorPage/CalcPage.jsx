@@ -1,5 +1,5 @@
 // styles
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import "../../../assets/scss/components/pages/CalculatorPage/_calc.scss"
 import CalcInput from "./CalcInput"
 import BMI from "./BMI"
@@ -44,19 +44,13 @@ export default function CalcPage() {
 
     const [inputGender, setInputGender] = useState(genders.male)
     const [inputAgeValue, setInputAgeValue] = useState(50)
-    const [inputHeightValue, setInputHeightValue] = useState(150)
+    const [inputHeightValue, setInputHeightValue] = useState(180)
     const [inputWeightValue, setInputWeightValue] = useState(80)
     const [inputFatValue, setInputFatValue] = useState(1.1)
     const [inputActivityValue, setInputActivityValue] = useState(1)
 
-    //  bmi = inputWeightValue / (inputHeightValue/100 * inputHeightValue/100)
     const [bmi, setBmi] = useState(0)
-    // BMI less than 18.5: bmiIndicatorIndex = 0
-    // BMI from 18.5 to 24.9: bmiIndicatorIndex = 1
-    // BMI from 25.0 to 29.9: bmiIndicatorIndex = 2
-    // BMI from 30.0 to 34.9: bmiIndicatorIndex = 3
-    // BMI from 35.0 to 39.9: bmiIndicatorIndex = 4
-    // BMI 40.0 and above: bmiIndicatorIndex = 5
+
     const [bmiIndicatorIndex, setBmiIndicatorIndex] = useState(0)
 
     const [calorieIntake, setCalorieIntake] = useState(0)
@@ -98,6 +92,11 @@ export default function CalcPage() {
             setBmiIndicatorIndex(5)
         }
     }
+
+    useEffect(() => {
+        calculateBmi()
+        calculateCalorieIntake()
+    })
 
     return (
         <>
