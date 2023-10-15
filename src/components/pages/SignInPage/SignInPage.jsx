@@ -1,23 +1,20 @@
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth';
 import app from '/src/assets/js/firebase/firebase';
 import { useState } from 'react';
-const auth = getAuth(app);
-
+import { auth } from '../../../assets/js/firebase/firebase';
+import { useContext } from 'react';
+import AuthContext from '../../../assets/js/auth-context';
 
 
 export default function SignInPage() {
     const [mail, setMail] = useState('');
     const [pas, setPas] = useState('');
+    const authCtx = useContext(AuthContext);
     function processSubmit(e){
         e.preventDefault();
-        console.log(`Processing form. Mail: ${mail}, Pas: ${pas}`)
-        console.log(mail)
         signInWithEmailAndPassword(auth, mail, pas)
         .then((userCredential) => {
-            console.log(userCredential)
             const user = userCredential.user;
-            user.metadata = ["some metadata"]
-            console.log(user.metadata)
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -30,12 +27,11 @@ export default function SignInPage() {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/auth.user
         const uid = user.uid;
-        console.log(user)
-        console.log(uid)
-        // ...
+        authCtx.setIsLoggedIn(true);
+        authCtx.setUid(uid);
+        
     } else {
-        // User is signed out
-        // ...
+
     }
     });
     return (

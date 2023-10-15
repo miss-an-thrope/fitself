@@ -1,8 +1,6 @@
-import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth';
-import app from '/src/assets/js/firebase/firebase';
+import { createUserWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth';
 import { useState } from 'react';
-const auth = getAuth(app);
-
+import { auth } from '../../../assets/js/firebase/firebase';
 
 
 export default function RegistrationPage() {
@@ -16,8 +14,6 @@ export default function RegistrationPage() {
         .then((userCredential) => {
             console.log(userCredential)
             const user = userCredential.user;
-            user.metadata = ["some metadata"]
-            console.log(user.metadata)
         })
         .catch((error) => {
           const errorCode = error.code;
