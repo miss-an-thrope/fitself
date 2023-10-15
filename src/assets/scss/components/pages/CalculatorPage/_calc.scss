@@ -76,8 +76,21 @@
     cursor: pointer;
 }
 
+.calc__input--radio {
+    position: relative;
+}
+
 .calc__input--radio input {
-    visibility: hidden;
+    position: absolute;
+    cursor: pointer;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
 }
 
 .calc__input--range {
@@ -86,7 +99,7 @@
 
 .calc__input--radio img {
     opacity: 0.6;
-    cursor: pointer;
+    pointer-events: none;
 }
 
 .calc__input--radio.active img {
@@ -160,23 +173,60 @@
     justify-content: flex-start;
     align-items: center;
     gap: 100px;
+    --protein-color: #088ad0;
+    --fat-color: #ffa500;
+    --fiber-color: #008000;
+    --carbs-color: #ff0000;
 }
 
 .nutrients__chart {
+    position: relative;
+    --protein: 28;
+    --fat: 13;
+    --carbs: 52;
+    --fiber: 7;
     width: 200px;
     height: 200px;
-    background-color: red;
     border-radius: 50%;
+    background: repeating-conic-gradient(
+        from 0deg,
+        var(--protein-color) 0deg calc(3.6deg * var(--protein)),
+        var(--fat-color) calc(3.6deg * var(--protein))
+            calc(3.6deg * calc(var(--protein) + var(--fat))),
+        var(--fiber-color) calc(3.6deg * calc(var(--protein) + var(--fat)))
+            calc(3.6deg * calc(var(--protein) + var(--fat) + var(--fiber))),
+        var(--carbs-color)
+            calc(3.6deg * calc(var(--protein) + var(--fat) + var(--fiber)))
+            calc(3.6deg * 100)
+    );
+}
+
+.nutrients__chart--hole {
+    width: 130px;
+    height: 130px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
 }
 
 .nutrients__list {
     min-width: 300px;
+    border: 1px solid black;
+    padding: 6px 6px 9px 25px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .nutrients__list-item {
     position: relative;
     display: flex;
     justify-content: space-between;
+    border-bottom: 1px solid black;
 }
 
 .nutrients__list-item::before {
@@ -191,15 +241,15 @@
     border-radius: 50%;
 }
 
-.nutrients__list-item:nth-child(1)::before {
-    background-color: rgb(8, 138, 208);
-}
 .nutrients__list-item:nth-child(2)::before {
-    background-color: orange;
+    background-color: var(--protein-color);
 }
 .nutrients__list-item:nth-child(3)::before {
-    background-color: red;
+    background-color: var(--fat-color);
+}
+.nutrients__list-item:nth-child(1)::before {
+    background-color: var(--carbs-color);
 }
 .nutrients__list-item:nth-child(4)::before {
-    background-color: green;
+    background-color: var(--fiber-color);
 }
