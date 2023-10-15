@@ -1,15 +1,16 @@
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth';
-import app from '/src/assets/js/firebase/firebase';
+import {signInWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth';
 import { useState } from 'react';
 import { auth } from '../../../assets/js/firebase/firebase';
 import { useContext } from 'react';
 import AuthContext from '../../../assets/js/auth-context';
-
+import {useNavigate } from "react-router-dom";
 
 export default function SignInPage() {
     const [mail, setMail] = useState('');
     const [pas, setPas] = useState('');
     const authCtx = useContext(AuthContext);
+    const lc = window.localStorage;
+    const navigateTo = useNavigate();
     function processSubmit(e){
         e.preventDefault();
         signInWithEmailAndPassword(auth, mail, pas)
@@ -21,6 +22,7 @@ export default function SignInPage() {
           const errorMessage = error.message;
           // ..
         });
+        navigateTo('/profile')
     }
     onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -29,7 +31,11 @@ export default function SignInPage() {
         const uid = user.uid;
         authCtx.setIsLoggedIn(true);
         authCtx.setUid(uid);
-        
+        const userLC = {
+            isLoggedIn: true,
+            uid: uid
+        }
+        lc.setItem('auth', JSON.stringify(userLC));
     } else {
 
     }
@@ -49,6 +55,7 @@ export default function SignInPage() {
                     </label>
                     <input type="submit" value="Submit" />
                 </form>
+                
         </>
 
     )

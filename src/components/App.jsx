@@ -1,6 +1,7 @@
 // React tools
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState} from 'react';
+
 // styles
 import '../assets/scss/components/_app.scss';
 
@@ -18,14 +19,21 @@ import ProfilePage from './pages/ProfilePage/ProfilePage';
 
 
 export default function App() {
-   const [isLoggedIn, setIsLoggedIn] = useState(false);
+   const lc = window.localStorage;
+   const authLC = JSON.parse(lc.getItem('auth')) ;
+   const [isLoggedIn, setIsLoggedIn] = useState("");
    const [uid, setUid] = useState("");
-   useEffect(() =>{
-      auth.currentUser ? setIsLoggedIn(true) : setIsLoggedIn(false)
-      auth.currentUser ? setUid(auth.currentUser.uid) : setUid("")
+   useEffect(() => {
+      if(authLC){
+         setIsLoggedIn(authLC.isLoggedIn);
+         setUid(authLC.uid);
+      }
+      else{
+         setIsLoggedIn(false);
+         setUid("");
+      }
    
-   },[])
-   console.log(auth.currentUser)
+   }, [])
 
    const router = createBrowserRouter([
       {
@@ -53,7 +61,7 @@ export default function App() {
                path: 'profile',
                element: <ProfilePage />
             }
-         ],    
+         ],
       },
    ]);
 

@@ -1,8 +1,9 @@
 
 // React tools
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { auth } from '../../../assets/js/firebase/firebase';
 import AuthContext from '../../../assets/js/auth-context';
+import logout from '../../../assets/js/logout';
 // styles
 import '../../../assets/scss/components/root/blocks/_header.scss';
 //hooks
@@ -10,14 +11,7 @@ import { useContext } from 'react';
 
 export default function Header() {
    const authCtx = useContext(AuthContext);
-   function logout(){
-     auth.signOut().then(function() {
-         console.log('Signed Out');
-         authCtx.setIsLoggedIn(false);
-       }, function(error) {
-         console.error('Sign Out Error', error);
-       });
-   } 
+   const navigateTo = useNavigate();
    return (
       <>
          <header className='header'>
@@ -49,7 +43,7 @@ export default function Header() {
                   {!authCtx.isLoggedIn && <NavLink to='signin' className='navbar__link'>Sign in</NavLink>}
                   {authCtx.isLoggedIn && <NavLink to='profile' className='navbar__link'>Your profile</NavLink>}
                   </li>
-                  {authCtx.isLoggedIn && <li><button onClick={logout}>Log out</button></li> }
+                  {authCtx.isLoggedIn && <li><button onClick={()=> {logout(authCtx, navigateTo, auth)}}>Log out</button></li> }
                </ul>
             </nav>
             

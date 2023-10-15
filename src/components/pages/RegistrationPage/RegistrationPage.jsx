@@ -1,24 +1,23 @@
 import { createUserWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth';
 import { useState } from 'react';
 import { auth } from '../../../assets/js/firebase/firebase';
+import { useNavigate } from 'react-router';
 
 
 export default function RegistrationPage() {
     const [mail, setMail] = useState('');
     const [pas, setPas] = useState('');
+    const navigateTo = useNavigate()
     function processSubmit(e){
         e.preventDefault();
-        console.log(`Processing form. Mail: ${mail}, Pas: ${pas}`)
-        console.log(mail)
         createUserWithEmailAndPassword(auth, mail, pas)
         .then((userCredential) => {
-            console.log(userCredential)
-            const user = userCredential.user;
+            navigateTo('/profile')
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          // ..
+      
         });
     }
     onAuthStateChanged(auth, (user) => {
@@ -35,7 +34,7 @@ export default function RegistrationPage() {
     });
     return (
         <>
-                "REGISTRATION"
+                REGISTRATION
                 <form onSubmit={processSubmit}>
                     <label>
                         E-mail:
