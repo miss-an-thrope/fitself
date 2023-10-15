@@ -1,12 +1,23 @@
 
 // React tools
 import { Link, NavLink } from 'react-router-dom';
-
+import { auth } from '../../../assets/js/firebase/firebase';
+import AuthContext from '../../../assets/js/auth-context';
 // styles
 import '../../../assets/scss/components/root/blocks/_header.scss';
+//hooks
+import { useContext } from 'react';
 
 export default function Header() {
-
+   const authCtx = useContext(AuthContext);
+   function logout(){
+     auth.signOut().then(function() {
+         console.log('Signed Out');
+         authCtx.setIsLoggedIn(false);
+       }, function(error) {
+         console.error('Sign Out Error', error);
+       });
+   } 
    return (
       <>
          <header className='header'>
@@ -32,11 +43,13 @@ export default function Header() {
                      <NavLink to='calculator' className='navbar__link'>Calculator</NavLink>
                   </li>
                   <li className='navbar__item'>
-                     <NavLink to='signup' className='navbar__link'>Sign up</NavLink>
+                  {!authCtx.isLoggedIn && <NavLink to='signup' className='navbar__link'>Sign up</NavLink>}
                   </li>
                   <li className='navbar__item'>
-                     <NavLink to='signin' className='navbar__link'>Sign in</NavLink>
+                  {!authCtx.isLoggedIn && <NavLink to='signin' className='navbar__link'>Sign in</NavLink>}
+                  {authCtx.isLoggedIn && <NavLink to='profile' className='navbar__link'>Your profile</NavLink>}
                   </li>
+                  {authCtx.isLoggedIn && <li><button onClick={logout}>Log out</button></li> }
                </ul>
             </nav>
             
