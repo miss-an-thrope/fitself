@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 
 function CalcInput({
     inputType,
@@ -10,6 +10,9 @@ function CalcInput({
     setInputValue,
     limit,
     calculateBmi,
+    setFiber,
+    setProtein,
+    setFat,
 }) {
     const [fatPercentage, setFatPercentage] = useState("5%")
 
@@ -24,6 +27,13 @@ function CalcInput({
         calculateCalorieIntake()
     }
     function handleRangeInput(e) {
+        if (Number(e.target.getAttribute("max")) === 100) {
+            setFiber(1 + Number(e.target.value) * 0.07)
+        } else if (Number(e.target.getAttribute("max")) === 200) {
+            setFat(13 - Number(e.target.value) * 0.02)
+        } else if (e.target.nodeName === "SELECT") {
+            setProtein(28 + Number(e.target.value) * 3)
+        }
         setInputValue(Number(e.target.value))
         calculateCalorieIntake()
         calculateBmi()
@@ -96,10 +106,7 @@ function CalcInput({
                         return (
                             <>
                                 <div className="calc__input">
-                                    <label
-                                        className="calc__input--label"
-                                        htmlFor="age"
-                                    >
+                                    <label className="calc__input--label">
                                         {inputLabel}
                                     </label>
                                     <input
@@ -107,8 +114,6 @@ function CalcInput({
                                         type="range"
                                         min={1}
                                         max={limit}
-                                        name="age"
-                                        id="age"
                                         defaultValue={inputValue}
                                         onChange={(e) => handleRangeInput(e)}
                                     />
