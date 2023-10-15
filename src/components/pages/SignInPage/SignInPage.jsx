@@ -1,18 +1,18 @@
-import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth';
 import app from '/src/assets/js/firebase/firebase';
 import { useState } from 'react';
 const auth = getAuth(app);
 
 
 
-export default function RegistrationPage() {
+export default function SignInPage() {
     const [mail, setMail] = useState('');
     const [pas, setPas] = useState('');
     function processSubmit(e){
         e.preventDefault();
         console.log(`Processing form. Mail: ${mail}, Pas: ${pas}`)
         console.log(mail)
-        createUserWithEmailAndPassword(auth, mail, pas)
+        signInWithEmailAndPassword(auth, mail, pas)
         .then((userCredential) => {
             console.log(userCredential)
             const user = userCredential.user;
@@ -30,6 +30,7 @@ export default function RegistrationPage() {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/auth.user
         const uid = user.uid;
+        console.log(user)
         console.log(uid)
         // ...
     } else {
@@ -39,7 +40,7 @@ export default function RegistrationPage() {
     });
     return (
         <>
-                "REGISTRATION"
+                <h1>Sign in</h1>
                 <form onSubmit={processSubmit}>
                     <label>
                         E-mail:

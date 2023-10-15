@@ -34,6 +34,9 @@ export default function Header() {
                   <li className='navbar__item'>
                      <NavLink to='signup' className='navbar__link'>Sign up</NavLink>
                   </li>
+                  <li className='navbar__item'>
+                     <NavLink to='signin' className='navbar__link'>Sign in</NavLink>
+                  </li>
                </ul>
             </nav>
             

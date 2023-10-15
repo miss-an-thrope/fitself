@@ -12,6 +12,7 @@ import ErrorPage from "./pages/ErrorPage";
 import HomePage from "./pages/HomePage/HomePage";
 import CalcPage from './pages/CalculatorPage/CalcPage';
 import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
+import SignInPage from './pages/SignInPage/SignInPage';
 
 export default function App() {
 
@@ -32,6 +33,10 @@ export default function App() {
             {
                path: 'signup',
                element: <RegistrationPage />
+            },
+            {
+               path: 'signin',
+               element: <SignInPage />
             }
          ],    
       },
