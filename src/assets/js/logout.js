@@ -1,5 +1,5 @@
 export default function logout(authCtx, navigateTo, auth){
-    const lc = window.localStorage;
+    const ls = window.localStorage;
     auth.signOut().then(function() {
         console.log('Signed Out');
         authCtx.setIsLoggedIn(false);
@@ -7,7 +7,8 @@ export default function logout(authCtx, navigateTo, auth){
          isLoggedIn: false,
          uid: ""
         }
-        lc.setItem('auth', JSON.stringify(userLC));
+        ls.setItem('auth', JSON.stringify(userLC));
+        ls.setItem("currentUser", "");
         navigateTo("/signin")
     }, function(error) {
       console.error('Sign Out Error', error);

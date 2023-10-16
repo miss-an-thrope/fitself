@@ -23,6 +23,7 @@ export default function App() {
    const authLC = JSON.parse(lc.getItem('auth')) ;
    const [isLoggedIn, setIsLoggedIn] = useState("");
    const [uid, setUid] = useState("");
+   // console.log(auth);
    useEffect(() => {
       if(authLC){
          setIsLoggedIn(authLC.isLoggedIn);

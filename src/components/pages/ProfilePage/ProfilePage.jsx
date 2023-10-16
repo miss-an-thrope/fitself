@@ -1,34 +1,14 @@
+import { useEffect, useState } from "react";
 import { auth } from "../../../assets/js/firebase/firebase";
 import { updateProfile } from "firebase/auth";
 export default function ProfilePage(){
-    let currentUser;
-    let userName = "Guest";
-    let email = "";
-    if(auth.currentUser){
-        currentUser = auth.currentUser;
-        userName = currentUser.displayName;
-        email = currentUser.email;
-        let providerData = currentUser.providerData;
-        // providerData.push({
-        //     weight: 76,
-        //     height: 176,
-        // })
-        // console.log(currentUser)
-        // updateProfile(currentUser, {
-        //     displayName: "Jane Q. User",
-        //     providerData : providerData,
-        //   }).then(() => {
-        //     console.log("Profile updated!")
-        //     //...
-        //   }).catch((error) => {
-        //     // An error occurred
-        //     // ...
-        //   });
-    }
-
+    const ls = window.localStorage;
+    const currentUser = JSON.parse(ls.getItem("currentUser"));
+    const name = currentUser.displayName;
+    const email = currentUser.email
     return(
         <>
-            <h1>Hello, {userName ? userName : email}</h1>
+            <h1>Hello, {name ? name : email}</h1>
             <table>
                 <thead>
                     <tr>
@@ -38,24 +18,15 @@ export default function ProfilePage(){
                 <tbody>
                     <tr>
                         <td>Name</td>
-                        <td>{userName ? userName : "Not entered"}</td>
-                        <td>Height</td>
-                        <td>Weight</td>
-                        <td>Body fat</td>
+                        <td>{name ? name : "not set"}</td>
                     </tr>
                     <tr>
                         <td>Age</td>
-                        <td>Age</td>
-                        <td>Height</td>
-                        <td>Weight</td>
-                        <td>Body fat</td>
+                        <td>{}</td>
                     </tr>
                     <tr>
                         <td>Name</td>
                         <td>Age</td>
-                        <td>Height</td>
-                        <td>Weight</td>
-                        <td>Body fat</td>
                     </tr>
                     
                 </tbody>
