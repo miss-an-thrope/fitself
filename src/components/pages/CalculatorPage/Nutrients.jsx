@@ -19,38 +19,43 @@ function Nutrients({
     }
     useEffect(updateChart)
     return (
-        <div className="nutrients">
-            <div ref={nutrientsChart} className="nutrients__chart">
-                <div className="nutrients__chart--hole"></div>
-            </div>
-            <ul className="nutrients__list">
-                <li className="nutrients__list-item">
-                    Carbohydrates
-                    <span className="nutrients__list-item--grams">
-                        {carbsGrams}g
-                    </span>
-                </li>
-                <li className="nutrients__list-item">
-                    Proteins
-                    <span className="nutrients__list-item--grams">
-                        {proteinGrams}g
-                    </span>
-                </li>
-                <li className="nutrients__list-item">
-                    Fats
-                    <span className="nutrients__list-item--grams">
-                        {fatGrams}g
-                    </span>
-                </li>
+        <>
+            <div className="bb">
+                <h2>Nutrients recommendations:</h2>
+                <div className="nutrients">
+                    <div ref={nutrientsChart} className="nutrients__chart">
+                        <div className="nutrients__chart--hole"></div>
+                    </div>
+                    <ul className="nutrients__list">
+                        <li className="nutrients__list-item">
+                            Carbohydrates
+                            <span className="nutrients__list-item--grams">
+                                {carbsGrams}g
+                            </span>
+                        </li>
+                        <li className="nutrients__list-item">
+                            Proteins
+                            <span className="nutrients__list-item--grams">
+                                {proteinGrams}g
+                            </span>
+                        </li>
+                        <li className="nutrients__list-item">
+                            Fats
+                            <span className="nutrients__list-item--grams">
+                                {fatGrams}g
+                            </span>
+                        </li>
 
-                <li className="nutrients__list-item">
-                    Fiber
-                    <span className="nutrients__list-item--grams">
-                        {fiberGrams}g
-                    </span>
-                </li>
-            </ul>
-        </div>
+                        <li className="nutrients__list-item">
+                            Fiber
+                            <span className="nutrients__list-item--grams">
+                                {fiberGrams}g
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </>
     )
 }
 
