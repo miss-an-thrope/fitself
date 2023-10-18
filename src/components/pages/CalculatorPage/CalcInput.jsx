@@ -132,7 +132,10 @@ function CalcInput({
                                     </label>
                                     <fieldset>
                                         <div className="calc__input--radio">
-                                            <img src="../../../src/assets/img/fat/1.svg" />
+                                            <img
+                                                src="../../../src/assets/img/fat/1.svg"
+                                                style={{ opacity: 1 }}
+                                            />
                                             <input
                                                 type="radio"
                                                 name="fat"

@@ -1,7 +1,8 @@
 function BMI({ bmi, bmiIndicatorIndex }) {
     return (
         <div>
-            <h3>your BMI : {bmi}</h3>
+            <h2>your BMI : {bmi}</h2>
+
             <ul className="bmi__list">
                 <li>
                     <span
