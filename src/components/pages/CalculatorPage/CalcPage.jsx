@@ -146,6 +146,13 @@ export default function CalcPage() {
     return (
         <>
             <section className="main__calc calc">
+                <div className="main__calc--wrapper"></div>
+                <div className="main__calc--wrapper">
+                    <div className="main__calc--results">
+                        <h2>calories consumed: </h2>
+                        <h2>calories burned: </h2>
+                    </div>
+                </div>
                 <div className="main__calc--wrapper">
                     <h2>Body weight calculator</h2>
                     <form action="#">
@@ -203,9 +210,10 @@ export default function CalcPage() {
                     </form>
                 </div>
                 <div className="main__calc--wrapper">
-                    <h2>Results</h2>
-                    <BMI bmi={bmi} bmiIndicatorIndex={bmiIndicatorIndex} />
                     <h2>your redommended calorie intake: {calorieIntake}</h2>
+                    <hr />
+                    <BMI bmi={bmi} bmiIndicatorIndex={bmiIndicatorIndex} />
+                    <hr />
                     <Nutrients
                         protein={protein}
                         carbs={carbs}
