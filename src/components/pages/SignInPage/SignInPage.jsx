@@ -2,7 +2,7 @@ import {signInWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth';
 import { useState } from 'react';
 import { auth } from '../../../assets/js/firebase/firebase';
 import { useContext } from 'react';
-import AuthContext from '../../../assets/js/auth-context';
+import AuthContext from '../../../assets/js/authentication/auth-context';
 import {useNavigate } from "react-router-dom";
 
 export default function SignInPage() {

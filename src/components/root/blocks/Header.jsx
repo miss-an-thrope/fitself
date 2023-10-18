@@ -2,8 +2,8 @@
 // React tools
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { auth } from '../../../assets/js/firebase/firebase';
-import AuthContext from '../../../assets/js/auth-context';
-import logout from '../../../assets/js/logout';
+import AuthContext from '../../../assets/js/authentication/auth-context';
+import logout from '../../../assets/js/authentication/logout';
 // styles
 import '../../../assets/scss/components/root/blocks/_header.scss';
 //hooks

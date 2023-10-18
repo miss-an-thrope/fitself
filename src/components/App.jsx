@@ -7,7 +7,7 @@ import '../assets/scss/components/_app.scss';
 
 // Components
 import Root from "./root/Root";
-import AuthContext from '../assets/js/auth-context';
+import AuthContext from '../assets/js/authentication/auth-context';
 import { auth } from '../assets/js/firebase/firebase';
 // Pages
 import ErrorPage from "./pages/ErrorPage";
@@ -16,6 +16,7 @@ import CalcPage from './pages/CalculatorPage/CalcPage';
 import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
 import SignInPage from './pages/SignInPage/SignInPage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
+import UpdateDataPage from './pages/UpdateDataPage/UpdateDataPage';
 
 
 export default function App() {
@@ -33,7 +34,6 @@ export default function App() {
          setIsLoggedIn(false);
          setUid("");
       }
-   
    }, [])
 
    const router = createBrowserRouter([
@@ -61,7 +61,12 @@ export default function App() {
             {
                path: 'profile',
                element: <ProfilePage />
+            },
+            {
+               path: 'updateUsersData',
+               element: <UpdateDataPage/>
             }
+            
          ],
       },
    ]);
