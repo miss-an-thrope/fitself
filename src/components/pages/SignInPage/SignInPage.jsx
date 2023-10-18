@@ -1,39 +1,40 @@
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth';
-import app from '/src/assets/js/firebase/firebase';
+import {signInWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth';
 import { useState } from 'react';
 import { auth } from '../../../assets/js/firebase/firebase';
 import { useContext } from 'react';
-import AuthContext from '../../../assets/js/auth-context';
-
+import AuthContext from '../../../assets/js/authentication/auth-context';
+import {useNavigate } from "react-router-dom";
 
 export default function SignInPage() {
     const [mail, setMail] = useState('');
     const [pas, setPas] = useState('');
     const authCtx = useContext(AuthContext);
+    const ls = window.localStorage;
+    const navigateTo = useNavigate();
     function processSubmit(e){
         e.preventDefault();
         signInWithEmailAndPassword(auth, mail, pas)
         .then((userCredential) => {
             const user = userCredential.user;
+            const uid = user.uid;
+            authCtx.setIsLoggedIn(true);
+            authCtx.setUid(uid);
+            const userLS = {
+                isLoggedIn: true,
+                uid: uid
+            }
+            ls.setItem('auth', JSON.stringify(userLS));
+            ls.setItem("currentUser", JSON.stringify(auth.currentUser))
+            navigateTo('/profile')
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           // ..
         });
-    }
-    onAuthStateChanged(auth, (user) => {
-    if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/auth.user
-        const uid = user.uid;
-        authCtx.setIsLoggedIn(true);
-        authCtx.setUid(uid);
-        
-    } else {
 
     }
-    });
+
     return (
         <>
                 <h1>Sign in</h1>
@@ -49,6 +50,7 @@ export default function SignInPage() {
                     </label>
                     <input type="submit" value="Submit" />
                 </form>
+                
         </>
 
     )

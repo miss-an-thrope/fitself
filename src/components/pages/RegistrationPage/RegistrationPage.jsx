@@ -1,41 +1,45 @@
-import { createUserWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth';
-import { useState } from 'react';
-import { auth } from '../../../assets/js/firebase/firebase';
-
-
+import { createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';
+import { ref, set} from "firebase/database";
+import { useState, useContext } from 'react';
+import { auth, db } from '../../../assets/js/firebase/firebase';
+import { useNavigate } from 'react-router';
+import AuthContext from '../../../assets/js/authentication/auth-context';
+import createUserInfo from '../../../assets/js/authentication/createUserInfo';
 export default function RegistrationPage() {
     const [mail, setMail] = useState('');
     const [pas, setPas] = useState('');
+    const navigateTo = useNavigate();
+    const authCtx = useContext(AuthContext);
+    const ls = window.localStorage;
+    const userInfo = createUserInfo();
+
     function processSubmit(e){
         e.preventDefault();
-        console.log(`Processing form. Mail: ${mail}, Pas: ${pas}`)
-        console.log(mail)
         createUserWithEmailAndPassword(auth, mail, pas)
         .then((userCredential) => {
-            console.log(userCredential)
             const user = userCredential.user;
+            const uid = user.uid
+            authCtx.setIsLoggedIn(true);
+            authCtx.setUid(uid);
+            const userLS = {
+                isLoggedIn: true,
+                uid: uid
+            }
+            ls.setItem("auth", JSON.stringify(userLS))
+            ls.setItem("currentUser", JSON.stringify(user));
+            set(ref(db, 'users/' + uid), userInfo).then(() => {
+                console.log("set done!")
+                navigateTo('/profile')
+            })
         })
         .catch((error) => {
           const errorCode = error.code;
-          const errorMessage = error.message;
-          // ..
+          const errorMessage = error.message; 
         });
     }
-    onAuthStateChanged(auth, (user) => {
-    if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/auth.user
-        const uid = user.uid;
-        console.log(uid)
-        // ...
-    } else {
-        // User is signed out
-        // ...
-    }
-    });
     return (
         <>
-                "REGISTRATION"
+                REGISTRATION
                 <form onSubmit={processSubmit}>
                     <label>
                         E-mail:
