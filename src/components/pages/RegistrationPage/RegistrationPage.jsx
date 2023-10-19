@@ -8,6 +8,7 @@ import createUserInfo from '../../../assets/js/authentication/createUserInfo';
 export default function RegistrationPage() {
     const [mail, setMail] = useState('');
     const [pas, setPas] = useState('');
+    const [error, setError] = useState('');
     const navigateTo = useNavigate();
     const authCtx = useContext(AuthContext);
     const ls = window.localStorage;
@@ -29,12 +30,14 @@ export default function RegistrationPage() {
             ls.setItem("currentUser", JSON.stringify(user));
             set(ref(db, 'users/' + uid), userInfo).then(() => {
                 console.log("set done!")
-                navigateTo('/profile')
+                
             })
+            navigateTo('/profile')
         })
         .catch((error) => {
           const errorCode = error.code;
-          const errorMessage = error.message; 
+          const errorMessage = error.message;
+          setError(error.message)
         });
     }
     return (
@@ -52,6 +55,7 @@ export default function RegistrationPage() {
                     </label>
                     <input type="submit" value="Submit" />
                 </form>
+                {error && <p className="errMsg">{error}</p>}
         </>
 
     )

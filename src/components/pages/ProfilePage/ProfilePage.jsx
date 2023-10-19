@@ -20,6 +20,7 @@ export default function ProfilePage(){
         get(child(dbRef, `users/${uid}`)).then((snapshot) => {
           if (snapshot.exists()) {
             const userInfo = snapshot.val();
+            setName(userInfo.name)
             setAge(userInfo.age);
             setHeight(userInfo.height);
             setWeight(userInfo.initialWeight);

@@ -1,5 +1,5 @@
 import './updateDataStyle.scss'
-import { set, ref, get, child, onValue} from 'firebase/database';
+import { set, ref, get, child} from 'firebase/database';
 import { db } from '../../../assets/js/firebase/firebase';
 import { useContext, useEffect, useState } from 'react';
 import AuthContext from '../../../assets/js/authentication/auth-context';
@@ -10,10 +10,12 @@ import { useNavigate } from 'react-router';
 export default function UpdateDataPage(){
     const ctx = useContext(AuthContext);
     const navigateTo = useNavigate();
-    const [age, setAge] = useState("")
-    const [height,setHeight] = useState("") 
-    const [waist,setWaist] = useState("") 
-    const [weight, setWeight] = useState("")
+    const [name, setName] = useState("");
+    const [age, setAge] = useState("");
+    const [height,setHeight] = useState(""); 
+    const [waist,setWaist] = useState("");
+    const [weight, setWeight] = useState("");
+
     function processSubmit(e){
         e.preventDefault();
         const name = e.target.name.value;    
@@ -21,6 +23,8 @@ export default function UpdateDataPage(){
         const height = e.target.height.value;    
         const weight = e.target.weight.value;    
         const waist = e.target.waist.value;
+        set(ref(db, 'users/' + ctx.uid + "/name"), name)
+          .then(() => {console.log("Name updated")})
         set(ref(db, 'users/' + ctx.uid + "/age"), age)
           .then(() => {console.log("Age updated")})
         set(ref(db, 'users/' + ctx.uid + "/height"), height)
@@ -29,6 +33,7 @@ export default function UpdateDataPage(){
           .then(() => {console.log("weight updated")})
         set(ref(db, 'users/' + ctx.uid + "/initialWaistSize"), waist)
           .then(() => {console.log("waist updated")})
+          navigateTo("/profile")
 
     };
     function setFormValues(){
@@ -36,7 +41,8 @@ export default function UpdateDataPage(){
         get(child(dbRef, `users/${ctx.uid}`)).then((snapshot) => {
           if (snapshot.exists()) {
                 const dataFromDB = snapshot.val();
-                console.log(dataFromDB)
+                console.log(ctx)
+                setName(dataFromDB.name ? dataFromDB.name : "not set")
                 setAge(dataFromDB.age ? dataFromDB.age : "not set")
                 setWeight(dataFromDB.initialWeight ? dataFromDB.initialWeight : "not set")
                 setHeight(dataFromDB.height ? dataFromDB.height : "not set")
@@ -53,10 +59,11 @@ export default function UpdateDataPage(){
     
     return(
         <>
+            <h1>Your initial data</h1>
             <form id="updateUserDataForm" onSubmit={processSubmit}>
                 <label>
                     Your name
-                    <input type="text" name="name" id="name"  onChange={()=> {}}/>
+                    <input type="text" name="name" id="name"  value = {name} onChange={(e)=> {setName(e.target.value)}}/>
                 </label>
                 <label>
                     Your age
