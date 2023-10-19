@@ -1,3 +1,17 @@
+h2 {
+    font-weight: 500;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .main__calc {
+        grid-template-columns: 1fr !important;
+    }
+}
+
 .main__calc {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -26,8 +40,31 @@
     margin-bottom: 10px;
 }
 
+.main__calc--results {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.main__calc--results button {
+    font-size: 18px;
+}
+
 .main__calc--results h2 {
     text-align: start;
+}
+
+.main__calc--results input,
+.main__calc--results select {
+    border-radius: 5px;
+    border: 1px solid black;
+    padding-left: 5px;
+    width: 100%;
+    font-size: 18px;
+}
+
+.main__calc--results select {
+    cursor: pointer;
 }
 
 .bb {
@@ -47,22 +84,26 @@ hr {
     border: 1px solid black;
     border-radius: 5px;
     padding: 5px 10px;
-    background-color: white;
+    background-color: gray;
     width: 100%;
     cursor: pointer;
+    color: white;
+    font-weight: bold;
+}
+
+.btn-blue {
+    background: var(--protein-color);
+}
+
+.btn-red {
+    background: var(--carbs-color);
 }
 
 .btn:hover {
-    background-color: #d3d3d3;
+    opacity: 0.8;
 }
 
 .btn-active {
-    background: var(--main-green);
-    color: white;
-}
-
-.btn-active:hover {
-    --main-green: rgba(13, 82, 13, 0.8);
     background: var(--main-green);
 }
 
@@ -282,10 +323,35 @@ input[type="range"]:focus::-ms-fill-upper {
     justify-content: flex-start;
     align-items: center;
     gap: 100px;
-    --protein-color: #088ad0;
-    --fat-color: #ffa500;
-    --fiber-color: #008000;
-    --carbs-color: #ff0000;
+}
+
+.nutrient-red {
+    background: var(--carbs-color);
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 0 !important;
+}
+.nutrient-blue {
+    background: var(--protein-color);
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 0 !important;
+}
+.nutrient-yellow {
+    background: var(--fat-color);
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 0 !important;
+}
+.nutrient-green {
+    background: var(--fiber-color);
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    margin-bottom: 0 !important;
 }
 
 .nutrients__chart {
