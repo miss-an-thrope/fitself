@@ -1,4 +1,4 @@
-function FoodInput({ setFoodGramsInput }) {
+function FoodInput({ setFoodGramsInput, setFoodInput }) {
     return (
         <div className="main__calc--results">
             <input
@@ -6,6 +6,7 @@ function FoodInput({ setFoodGramsInput }) {
                 placeholder="type in food"
                 name="food"
                 id="food"
+                onChange={(e) => setFoodInput(e.target.value)}
             />
             <input
                 type="number"
