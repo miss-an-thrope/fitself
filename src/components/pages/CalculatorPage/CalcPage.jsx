@@ -1,12 +1,18 @@
-// styles
 import { useEffect, useState } from "react"
+
+// styles
 import "../../../assets/scss/components/pages/CalculatorPage/_calc.scss"
+
+// components
 import CalcInput from "./CalcInput"
 import BMI from "./BMI"
 import Nutrients from "./Nutrients"
 import FoodInput from "./FoodInput"
 import ExerciseInput from "./ExerciseInput"
 import DailyResults from "./DailyResults"
+
+// api
+import fetchFood from "../../../utils/api"
 
 export default function CalcPage() {
     // inputs config
@@ -62,14 +68,14 @@ export default function CalcPage() {
     const [calorieIntake, setCalorieIntake] = useState(0)
 
     // nutrients
+    const [carbs, setCarbs] = useState(50)
     const [protein, setProtein] = useState(30)
     const [fat, setFat] = useState(13)
-    const [carbs, setCarbs] = useState(50)
     const [fiber, setFiber] = useState(7)
     // in grams
+    const [carbsGrams, setCarbsGrams] = useState(0)
     const [proteinGrams, setProteinGrams] = useState(0)
     const [fatGrams, setFatGrams] = useState(0)
-    const [carbsGrams, setCarbsGrams] = useState(0)
     const [fiberGrams, setFiberGrams] = useState(0)
 
     const caloriesInNutrient = {
@@ -169,6 +175,49 @@ export default function CalcPage() {
         e.target.reset()
     }
 
+    function calculateFood(e) {
+        e.preventDefault()
+        fetchFood(foodInput).then(function (result) {
+            if (result.length === 0) {
+                // todo: show request error
+                e.target.reset()
+                return
+            }
+
+            // calories
+            const calories =
+                (result[0].food.nutrients.ENERC_KCAL * foodGramsInput) / 100
+            setCaloriesConsumed(Math.round(caloriesConsumed + calories))
+
+            // carbohydrates
+            const carbohydrates =
+                (result[0].food.nutrients.CHOCDF * foodGramsInput) / 100
+            setCarbsPercentage(
+                Math.round(carbsPercentage + (carbohydrates * 100) / carbsGrams)
+            )
+
+            // proteins
+            const proteins =
+                (result[0].food.nutrients.PROCNT * foodGramsInput) / 100
+            setProteinsPercentage(
+                Math.round(proteinsPercentage + (proteins * 100) / carbsGrams)
+            )
+
+            // fats
+            const fats = (result[0].food.nutrients.FAT * foodGramsInput) / 100
+            setFatsPercentage(
+                Math.round(fatsPercentage + (fats * 100) / carbsGrams)
+            )
+            // fiber
+            const fiber =
+                (result[0].food.nutrients.FIBTG * foodGramsInput) / 100
+            setFiberPercentage(
+                Math.round(fiberPercentage + (fiber * 100) / carbsGrams)
+            )
+        })
+        e.target.reset()
+    }
+
     useEffect(() => {
         calculateBmi()
         calculateCalorieIntake()
@@ -181,7 +230,7 @@ export default function CalcPage() {
             <section className="main__calc calc">
                 {/* только для залогиненых */}
                 <div className="main__calc--wrapper">
-                    <form>
+                    <form onSubmit={(e) => calculateFood(e)}>
                         <FoodInput
                             setFoodGramsInput={setFoodGramsInput}
                             setFoodInput={setFoodInput}
