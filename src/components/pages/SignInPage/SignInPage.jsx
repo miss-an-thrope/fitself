@@ -8,6 +8,7 @@ import {useNavigate } from "react-router-dom";
 export default function SignInPage() {
     const [mail, setMail] = useState('');
     const [pas, setPas] = useState('');
+    const [error, setError] = useState('');
     const authCtx = useContext(AuthContext);
     const ls = window.localStorage;
     const navigateTo = useNavigate();
@@ -30,6 +31,7 @@ export default function SignInPage() {
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
+          setError(error.message)
           // ..
         });
 
@@ -42,14 +44,21 @@ export default function SignInPage() {
                     <label>
                         E-mail:
                         <input type="text" name="username" autoComplete="username" aria-hidden="true" className="hidden-input" style= {{display: 'none'}}/>
-                        <input type="mail" name="mail" autoComplete="username" required onChange={(e) => setMail(e.target.value)}/>
+                        <input type="mail" name="mail" autoComplete="username" required onChange={(e) => {
+                            setMail(e.target.value);
+                            setError("");
+                            }}/>
                     </label>
                     <label>
                         Password:
-                        <input type="password" name="password" autoComplete="current-password" required onChange={(e) => setPas(e.target.value)}/>
+                        <input type="password" name="password" autoComplete="current-password" required onChange={(e) => {
+                            setPas(e.target.value);
+                            setError("");
+                            }}/>
                     </label>
                     <input type="submit" value="Submit" />
                 </form>
+                {error && <p className="errMsg">{error}</p>}
                 
         </>
 
