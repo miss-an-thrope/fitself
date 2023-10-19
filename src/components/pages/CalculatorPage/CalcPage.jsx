@@ -4,6 +4,9 @@ import "../../../assets/scss/components/pages/CalculatorPage/_calc.scss"
 import CalcInput from "./CalcInput"
 import BMI from "./BMI"
 import Nutrients from "./Nutrients"
+import FoodInput from "./FoodInput"
+import ExerciseInput from "./ExerciseInput"
+import DailyResults from "./DailyResults"
 
 export default function CalcPage() {
     // inputs config
@@ -76,6 +79,22 @@ export default function CalcPage() {
         fiber: 2,
     }
 
+    // exercise
+    const [exerciseSelectInput, setExerciseSelectInput] = useState(0)
+    const [exerciseTimeInput, setExerciseTimeInput] = useState(0)
+    const [caloriesBurned, setCaloriesBurned] = useState(0)
+
+    // food intake
+    const [foodInput, setFoodInput] = useState("")
+    const [foodGramsInput, setFoodGramsInput] = useState(0)
+    const [caloriesConsumed, setCaloriesConsumed] = useState(0)
+
+    // nutrients %
+    const [carbsPercentage, setCarbsPercentage] = useState(0)
+    const [proteinsPercentage, setProteinsPercentage] = useState(0)
+    const [fatsPercentage, setFatsPercentage] = useState(0)
+    const [fiberPercentage, setFiberPercentage] = useState(0)
+
     function calculateCalorieIntake() {
         setCalorieIntake(
             Math.round(
@@ -136,6 +155,20 @@ export default function CalcPage() {
         )
     }
 
+    function calculateCaloriesBurned(e) {
+        e.preventDefault()
+        setCaloriesBurned(
+            Math.round(
+                caloriesBurned +
+                    (exerciseSelectInput *
+                        exerciseTimeInput *
+                        inputWeightValue) /
+                        150
+            )
+        )
+        e.target.reset()
+    }
+
     useEffect(() => {
         calculateBmi()
         calculateCalorieIntake()
@@ -146,15 +179,34 @@ export default function CalcPage() {
     return (
         <>
             <section className="main__calc calc">
-                <div className="main__calc--wrapper"></div>
+                {/* только для залогиненых */}
                 <div className="main__calc--wrapper">
-                    <div className="main__calc--results">
-                        <h2>calories consumed: </h2>
-                        <h2>calories burned: </h2>
-                    </div>
+                    <form>
+                        <FoodInput
+                            setFoodGramsInput={setFoodGramsInput}
+                            setFoodInput={setFoodInput}
+                        />
+                    </form>
+                    <hr />
+                    <form onSubmit={(e) => calculateCaloriesBurned(e)}>
+                        <ExerciseInput
+                            setExerciseSelectInput={setExerciseSelectInput}
+                            setExerciseTimeInput={setExerciseTimeInput}
+                        />
+                    </form>
+                    {/* только для залогиненых */}
                 </div>
                 <div className="main__calc--wrapper">
-                    <h2>Body weight calculator</h2>
+                    <DailyResults
+                        caloriesBurned={caloriesBurned}
+                        caloriesConsumed={caloriesConsumed}
+                        carbsPercentage={carbsPercentage}
+                        proteinsPercentage={proteinsPercentage}
+                        fatsPercentage={fatsPercentage}
+                        fiberPercentage={fiberPercentage}
+                    />
+                </div>
+                <div className="main__calc--wrapper">
                     <form action="#">
                         <CalcInput
                             genders={genders}
@@ -210,7 +262,10 @@ export default function CalcPage() {
                     </form>
                 </div>
                 <div className="main__calc--wrapper">
-                    <h2>your redommended calorie intake: {calorieIntake}</h2>
+                    <h2>
+                        your redommended calorie intake:{" "}
+                        <span className="bold">{calorieIntake}</span>
+                    </h2>
                     <hr />
                     <BMI bmi={bmi} bmiIndicatorIndex={bmiIndicatorIndex} />
                     <hr />

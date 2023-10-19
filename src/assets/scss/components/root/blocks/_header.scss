@@ -1,21 +1,18 @@
 .header {
-   display: grid;
-   grid-template: 1fr / 300px 1fr 300px;
-   border: 1px solid black;
-   
-   // &__logo{}
+    display: grid;
+    grid-template: 1fr / 300px 1fr 300px;
+    // &__logo{}
 
-   // &__navbar {}
+    // &__navbar {}
 
-   // &__profile {}
+    // &__profile {}
 }
 
 .navbar {
-   display: grid;
-   align-items: center;
-   &__list {
-      display: flex;
-      justify-content: space-evenly;
-   }
-   
+    display: grid;
+    align-items: center;
+    &__list {
+        display: flex;
+        justify-content: space-evenly;
+    }
 }
