@@ -184,6 +184,8 @@ export default function CalcPage() {
                 return
             }
 
+            console.log(result[0].food.nutrients)
+
             // calories
             const calories =
                 (result[0].food.nutrients.ENERC_KCAL * foodGramsInput) / 100
@@ -200,19 +202,19 @@ export default function CalcPage() {
             const proteins =
                 (result[0].food.nutrients.PROCNT * foodGramsInput) / 100
             setProteinsPercentage(
-                Math.round(proteinsPercentage + (proteins * 100) / carbsGrams)
+                Math.round(proteinsPercentage + (proteins * 100) / proteinGrams)
             )
 
             // fats
             const fats = (result[0].food.nutrients.FAT * foodGramsInput) / 100
             setFatsPercentage(
-                Math.round(fatsPercentage + (fats * 100) / carbsGrams)
+                Math.round(fatsPercentage + (fats * 100) / fatGrams)
             )
             // fiber
             const fiber =
                 (result[0].food.nutrients.FIBTG * foodGramsInput) / 100
             setFiberPercentage(
-                Math.round(fiberPercentage + (fiber * 100) / carbsGrams)
+                Math.round(fiberPercentage + (fiber * 100) / fiberGrams)
             )
         })
         e.target.reset()
