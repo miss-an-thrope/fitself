@@ -5,9 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 import AuthContext from '../../../assets/js/authentication/auth-context';
 import { useNavigate } from 'react-router';
 
-
-
-export default function UpdateDataPage(){
+function UpdateDataPage(){
     const ctx = useContext(AuthContext);
     const navigateTo = useNavigate();
     const [name, setName] = useState("");
@@ -35,7 +33,7 @@ export default function UpdateDataPage(){
           .then(() => {console.log("waist updated")})
           navigateTo("/profile")
 
-    };
+    }
     function setFormValues(){
         const dbRef = ref(db);
         get(child(dbRef, `users/${ctx.uid}`)).then((snapshot) => {
@@ -87,3 +85,5 @@ export default function UpdateDataPage(){
         </>
     )
 }
+
+export default UpdateDataPage;

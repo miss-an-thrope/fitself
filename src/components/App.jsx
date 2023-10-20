@@ -6,17 +6,13 @@ import { useEffect, useState} from 'react';
 import '../assets/scss/components/_app.scss';
 
 // Components
-
 import AuthContext from '../assets/js/authentication/auth-context';
-import { auth } from '../assets/js/firebase/firebase';
 // Pages
-
 import CalcPage from './pages/CalculatorPage/CalcPage';
 import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
 import SignInPage from './pages/SignInPage/SignInPage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 
-/* => Slaven-blet-man <= */
 // => Static
 import Root from "./root/Root";
 import ErrorPage from "./pages/ErrorPage";
@@ -24,6 +20,7 @@ import ErrorPage from "./pages/ErrorPage";
 import RecipesPage from './pages/RecipesPage/RecipesPage';
 import RecipeDetails from './pages/RecipesPage/RecipeDetails/RecipeDetails';
 import RecipeError from './pages/RecipesPage/RecipeDetails/RecipeError';
+import UpdateDataPage from './pages/UpdateDataPage/UpdateDataPage';
 
 
 export default function App() {
@@ -76,7 +73,7 @@ export default function App() {
             },
             {
                path: 'updateUsersData',
-               // element: <UpdateDataPage/>
+               element: <UpdateDataPage />,
             }
             
          ],
