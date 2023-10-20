@@ -1,0 +1,26 @@
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.auth-form > * {
+    width: 100%;
+}
+
+.auth-form input {
+    height: 40px;
+    min-width: 400px;
+    width: 100%;
+    border: 3px solid rgb(13, 82, 13);
+    border-radius: 20px;
+    font-size: 18px;
+    padding-left: 30px;
+    margin-top: 5px;
+}
+
+.auth-form label {
+    color: var(--main-green);
+    font-weight: bold;
+    font-size: 16px;
+}
