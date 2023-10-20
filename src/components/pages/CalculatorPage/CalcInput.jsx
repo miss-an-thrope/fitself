@@ -148,7 +148,7 @@ function CalcInput({
                                     <fieldset>
                                         <div className="calc__input--radio">
                                             <img
-                                                src="../../../src/assets/img/fat/1.svg"
+                                                src="https://firebasestorage.googleapis.com/v0/b/fitself-93859.appspot.com/o/1.svg?alt=media&token=dc49ca34-579a-4fea-b867-83ba45afa3d8&_gl=1*v9n5mf*_ga*MjE0MzkzNTc3NS4xNjk3MDU2ODYx*_ga_CW55HF8NVT*MTY5NzgxNzY0OC40Ni4xLjE2OTc4MTgxNTcuNjAuMC4w"
                                                 style={
                                                     inputValue == "1.1"
                                                         ? { opacity: 1 }
@@ -166,7 +166,7 @@ function CalcInput({
                                         </div>
                                         <div className="calc__input--radio">
                                             <img
-                                                src="../../../src/assets/img/fat/2.svg"
+                                                src="https://firebasestorage.googleapis.com/v0/b/fitself-93859.appspot.com/o/2.svg?alt=media&token=2aed60fc-0114-494b-8f65-36c9a32ec1ed&_gl=1*1c50pda*_ga*MjE0MzkzNTc3NS4xNjk3MDU2ODYx*_ga_CW55HF8NVT*MTY5NzgxNzY0OC40Ni4xLjE2OTc4MTgxODAuMzcuMC4w"
                                                 style={
                                                     inputValue == "1.05"
                                                         ? { opacity: 1 }
@@ -184,7 +184,7 @@ function CalcInput({
                                         </div>
                                         <div className="calc__input--radio">
                                             <img
-                                                src="../../../src/assets/img/fat/3.svg"
+                                                src="https://firebasestorage.googleapis.com/v0/b/fitself-93859.appspot.com/o/3.svg?alt=media&token=dd4635cb-b9a8-4cfd-bff3-edf0572de0c6&_gl=1*1tisgx5*_ga*MjE0MzkzNTc3NS4xNjk3MDU2ODYx*_ga_CW55HF8NVT*MTY5NzgxNzY0OC40Ni4xLjE2OTc4MTgxOTUuMjIuMC4w"
                                                 style={
                                                     inputValue == "1"
                                                         ? { opacity: 1 }
@@ -202,7 +202,7 @@ function CalcInput({
                                         </div>
                                         <div className="calc__input--radio">
                                             <img
-                                                src="../../../src/assets/img/fat/4.svg"
+                                                src="https://firebasestorage.googleapis.com/v0/b/fitself-93859.appspot.com/o/4.svg?alt=media&token=906b47d1-9896-4d0a-ad7d-416c71c5df78&_gl=1*w3rp2e*_ga*MjE0MzkzNTc3NS4xNjk3MDU2ODYx*_ga_CW55HF8NVT*MTY5NzgxNzY0OC40Ni4xLjE2OTc4MTgyMDYuMTEuMC4w"
                                                 style={
                                                     inputValue == "0.95"
                                                         ? { opacity: 1 }
@@ -220,7 +220,7 @@ function CalcInput({
                                         </div>
                                         <div className="calc__input--radio">
                                             <img
-                                                src="../../../src/assets/img/fat/5.svg"
+                                                src="https://firebasestorage.googleapis.com/v0/b/fitself-93859.appspot.com/o/5.svg?alt=media&token=45ec39a8-45c1-40c1-9639-f208a7b6cb48&_gl=1*jhjt3w*_ga*MjE0MzkzNTc3NS4xNjk3MDU2ODYx*_ga_CW55HF8NVT*MTY5NzgxNzY0OC40Ni4xLjE2OTc4MTgyMTguNjAuMC4w"
                                                 style={
                                                     inputValue == "0.9"
                                                         ? { opacity: 1 }

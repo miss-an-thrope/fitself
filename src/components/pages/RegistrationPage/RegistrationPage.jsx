@@ -47,15 +47,6 @@ export default function RegistrationPage() {
                 <label>
                     E-mail:
                     <input
-                        type="text"
-                        name="username"
-                        autoComplete="username"
-                        aria-hidden="true"
-                        className="hidden-input"
-                        style={{ display: "none" }}
-                        required
-                    />
-                    <input
                         type="mail"
                         name="mail"
                         autoComplete="username"
