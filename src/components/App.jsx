@@ -76,7 +76,7 @@ export default function App() {
             },
             {
                path: 'updateUsersData',
-               // element: <UpdateDataPage/>
+               element: <UpdateDataPage/>
             }
             
          ],

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { db } from "../../../assets/js/firebase/firebase";
-import { updateProfile } from "firebase/auth";
-import {ref, onValue, get, child } from "firebase/database";
+import {ref, get, child } from "firebase/database";
 import { NavLink } from "react-router-dom";
 export default function ProfilePage(){
     const ls = window.localStorage;
