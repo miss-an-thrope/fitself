@@ -1,0 +1,39 @@
+.recipes {
+   padding: 10px;
+   display: grid;
+   justify-items: center;
+   gap: 80px;
+
+   &__header {
+      padding-top: 30px;
+      font-size: 32px;
+      text-align: center;
+      color: rgba(13, 82, 13, 1);
+   }
+
+   // &__search {}
+
+   &__cards {
+      display: grid;
+      grid-template: 1fr / 0.25fr 0.25fr 0.25fr 0.25fr;
+      // grid-template: 1fr / 0.33fr 0.33fr 0.33fr;
+      gap: 50px;
+   }
+
+   &__more {
+      color: rgba(13, 82, 13, 1);
+      font-size: 18px;
+      height: 40px;
+      width: 200px;
+      border-radius: 20px;
+      border: 3px solid rgba(13, 82, 13, 1);
+      cursor: pointer;
+      background-color: white;
+      margin-bottom: 50px;
+
+      &:hover {
+         background-color: rgba(13, 82, 13, 1);
+         color: white;
+      }
+   }
+}

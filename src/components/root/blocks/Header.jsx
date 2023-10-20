@@ -21,18 +21,10 @@ export default function Header() {
                 <nav className="header__navbar navbar">
                     <ul className="navbar__list">
                         <li className="navbar__item">
+                            <NavLink to='recipes' className="navbar__link">Recipes</NavLink>
+                        </li>
+                        <li className="navbar__item">
                             <NavLink to="/" className="navbar__link">
-                                Home
-                            </NavLink>
-                        </li>
-                        <li className="navbar__item">
-                            <NavLink className="navbar__link">Products</NavLink>
-                        </li>
-                        <li className="navbar__item">
-                            <NavLink className="navbar__link">Recepts</NavLink>
-                        </li>
-                        <li className="navbar__item">
-                            <NavLink to="calculator" className="navbar__link">
                                 Calculator
                             </NavLink>
                         </li>

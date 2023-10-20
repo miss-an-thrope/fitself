@@ -6,17 +6,24 @@ import { useEffect, useState} from 'react';
 import '../assets/scss/components/_app.scss';
 
 // Components
-import Root from "./root/Root";
+
 import AuthContext from '../assets/js/authentication/auth-context';
 import { auth } from '../assets/js/firebase/firebase';
 // Pages
-import ErrorPage from "./pages/ErrorPage";
-import HomePage from "./pages/HomePage/HomePage";
+
 import CalcPage from './pages/CalculatorPage/CalcPage';
 import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
 import SignInPage from './pages/SignInPage/SignInPage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
-import UpdateDataPage from './pages/UpdateDataPage/UpdateDataPage';
+
+/* => Slaven-blet-man <= */
+// => Static
+import Root from "./root/Root";
+import ErrorPage from "./pages/ErrorPage";
+// => Recipes
+import RecipesPage from './pages/RecipesPage/RecipesPage';
+import RecipeDetails from './pages/RecipesPage/RecipeDetails/RecipeDetails';
+import RecipeError from './pages/RecipesPage/RecipeDetails/RecipeError';
 
 
 export default function App() {
@@ -44,11 +51,16 @@ export default function App() {
          children: [
             {
                path: '/',
-               element: <HomePage />
+               element: <CalcPage />
             },
             {
-               path: 'calculator',
-               element: <CalcPage />
+               path: 'recipes',
+               element: <RecipesPage />,
+            },
+            {
+               path: 'recipes/:id',
+               element: <RecipeDetails />,
+               errorElement: <RecipeError />,
             },
             {
                path: 'signup',
@@ -64,7 +76,7 @@ export default function App() {
             },
             {
                path: 'updateUsersData',
-               element: <UpdateDataPage/>
+               // element: <UpdateDataPage/>
             }
             
          ],

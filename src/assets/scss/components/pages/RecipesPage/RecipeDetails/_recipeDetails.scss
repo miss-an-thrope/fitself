@@ -1,0 +1,152 @@
+.recipe {
+   display: grid;
+   justify-items: center;
+   align-items: center;
+   grid-template:
+      [start] 'info info' auto [row2] 
+      [row2] 'ingridients health' auto [row3]
+      [row3] 'recommend recommmend' auto [row4]
+      [row4] 'end end' [end] / 1fr;
+
+
+   &__info {
+      width: 100%;
+      grid-area: info;
+      display: flex;
+      justify-content: space-evenly;
+
+
+
+      &__short {
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         flex-direction: column;
+      }
+   }
+
+   &__health {
+      grid-area: health;
+   }
+
+
+   &__ingridients {
+      grid-area: ingridients;
+   }
+
+   &__recommend {
+      grid-area: recommend;
+   }
+
+   &__desciption{
+      margin: 20px 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-evenly;
+      border: 3px solid rgb(13, 82, 13);
+      border-radius: 5px;
+   }
+
+   &__recommend {
+      display:grid;
+   }
+
+   &__end {
+      grid-area: end;
+   }
+}
+
+.info {
+   border: 3px solid rgb(13, 82, 13);
+   border-radius: 5px;
+   &__image {
+      width: 500px;
+      height: 500px;
+   }
+
+   // &__short {}
+}
+
+.short {
+
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   gap: 20px;
+
+   &__header{
+      padding: 20px 0;
+      font-size: 40px;
+   }
+
+   p {
+      font-size: 24px;
+   }
+}
+
+.ingridients {
+   max-width: 50%;
+   &__header{
+      margin: 20px 0;
+      font-size: 26px;
+   }
+
+   p {
+      font-size: 18px;
+   }
+
+   &__icon{
+      font-size: 18px;
+      color:rgba(13, 82, 13, 1)
+   }
+}
+
+.health {
+   &__header {
+      margin: 20px 0;
+      font-size: 26px;
+   }
+
+   p {
+      font-size: 18px;
+   }
+}
+
+.recommend {
+   width: 100%;
+   gap: 20px;
+   margin: 30px 0;
+   &__header{
+      text-align: center;
+   }
+   &__cards {
+      display: flex;
+      justify-content: space-evenly;
+   }
+}
+
+.end {
+   display: flex;
+   gap: 80px;
+   margin: 30px 0;
+   button {
+      height: 40px;
+      width: 150px;
+      border: 3px solid rgb(13, 82, 13);
+      border-radius: 20px;
+      cursor: pointer;
+      background-color: white;
+      color: rgba(13, 82, 13, 1);
+      font-size: 16px;
+
+      &:hover {
+         background-color: rgba(13, 82, 13, 1);
+         color: white;
+      }
+   }
+
+   &__home{
+      
+   }
+}

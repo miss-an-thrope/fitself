@@ -1,0 +1,36 @@
+.loader {
+   height: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   transition: opacity 0.75s, visibility 0.75s;
+
+   &__text{
+      text-align: center;
+   }
+}
+
+.loader.--hidden {
+   opacity: 0;
+   visibility: hidden;
+}
+
+.loader::after {
+   content: "";
+   width: 75px;
+   height: 75px;
+   border: 15px solid #dddddd;
+   border-top-color: rgba(13, 82, 13, 0.8);
+   border-radius: 50%;
+   animation: loading 0.75s ease infinite;
+}
+
+@keyframes loading {
+   from {
+      transform: rotate(0turn);
+   }
+
+   to {
+      transform: rotate(1turn);
+   }
+}

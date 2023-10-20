@@ -1,0 +1,50 @@
+.recipesSearch{
+   display: inline-block;
+   position: relative;
+   color:rgba(13, 82, 13, 1);
+
+   &:hover {
+      color: white;
+   }
+
+   input{
+      
+      height: 40px;
+      min-width: 400px;
+      border: 3px solid rgba(13, 82, 13, 1);
+      border-radius: 20px;
+      font-size: 18px;
+      &[type="text"] {
+         padding-block-start: 1px;
+         padding-left: 30px;
+      }
+
+      &::placeholder{
+         color: rgba(13, 82, 13, 1);
+      }
+
+   }
+
+   &__icon {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      width: 30px; /* Ширина для іконки */
+      height: 30px; /* Висота для іконки */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color:rgba(13, 82, 13, 1);
+      cursor: pointer;
+      &:hover {
+         color:rgba(13, 82, 13, 1);
+      }
+
+      svg {
+         width: 20px;
+         height: 20px;
+      }
+   }
+
+   
+}

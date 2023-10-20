@@ -1,0 +1,65 @@
+.card {
+   display: grid;
+   align-content: end;
+   justify-items: center;
+   border-radius: 5px;
+   border: 3px solid rgba(13, 82, 13, 1);
+   min-width: 300px;
+   min-height: 300px;
+   transition: background-image 1.2s ease;
+   background-color: rgba(13, 82, 13, 0.7);
+
+   p {
+      font-size: 14px;
+      margin: 13px 0;
+   }
+
+   &__ads{
+      font-size: 15px;
+      font-weight: bold;
+   }
+}
+
+.card__link {
+   text-align: center;
+   height: 100%;
+   width: 100%;
+   color: white;
+}
+
+.card__content {
+   display: flex;
+   flex-direction: column;
+   height: 100%;
+}
+
+.card__header {
+   font-size: 16px;
+   flex: 1;
+   color: white;
+   padding: 10px 0;
+   background-color: rgba(13, 82, 13, 0.7);
+}
+
+.card__description {
+   color: white;
+   background-color: rgba(13, 82, 13, 0.7);
+   opacity: 0;
+   transition: opacity 1.2s ease;
+   position: relative;
+   padding: 0 10px;
+}
+
+.card__description::before {
+   content: '';
+   position: absolute;
+   top: 0;
+   left: 10px;
+   right: 10px;
+   height: 1px;
+   background-color: white;
+}
+
+.card--hovered .card__description {
+   opacity: 1;
+}
