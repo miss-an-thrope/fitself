@@ -6,6 +6,7 @@ function CalcInput({
     inputValue,
     genders,
     setInputGender,
+    inputGender,
     calculateCalorieIntake,
     setInputValue,
     limit,
@@ -27,6 +28,8 @@ function CalcInput({
         calculateCalorieIntake()
     }
     function handleRangeInput(e) {
+        setInputValue(Number(e.target.value))
+
         if (Number(e.target.getAttribute("max")) === 100) {
             setFiber(1 + Number(e.target.value) * 0.07)
         } else if (Number(e.target.getAttribute("max")) === 200) {
@@ -34,7 +37,9 @@ function CalcInput({
         } else if (e.target.nodeName === "SELECT") {
             setProtein(28 + Number(e.target.value) * 3)
         }
-        setInputValue(Number(e.target.value))
+
+        // todo: if weight
+
         calculateCalorieIntake()
         calculateBmi()
     }
@@ -84,7 +89,12 @@ function CalcInput({
                                                 genders.male
                                             )
                                         }
-                                        className="btn btn-active"
+                                        className={`${
+                                            inputGender.gender ==
+                                            genders.male.gender
+                                                ? "btn btn-active"
+                                                : "btn"
+                                        }`}
                                     >
                                         Male
                                     </button>
@@ -95,7 +105,12 @@ function CalcInput({
                                                 genders.female
                                             )
                                         }
-                                        className="btn"
+                                        className={`${
+                                            inputGender.gender ==
+                                            genders.female.gender
+                                                ? "btn btn-active"
+                                                : "btn"
+                                        }`}
                                     >
                                         Female
                                     </button>
@@ -134,7 +149,11 @@ function CalcInput({
                                         <div className="calc__input--radio">
                                             <img
                                                 src="../../../src/assets/img/fat/1.svg"
-                                                style={{ opacity: 1 }}
+                                                style={
+                                                    inputValue == "1.1"
+                                                        ? { opacity: 1 }
+                                                        : { opacity: 0.6 }
+                                                }
                                             />
                                             <input
                                                 type="radio"
@@ -146,7 +165,14 @@ function CalcInput({
                                             />
                                         </div>
                                         <div className="calc__input--radio">
-                                            <img src="../../../src/assets/img/fat/2.svg" />
+                                            <img
+                                                src="../../../src/assets/img/fat/2.svg"
+                                                style={
+                                                    inputValue == "1.05"
+                                                        ? { opacity: 1 }
+                                                        : { opacity: 0.6 }
+                                                }
+                                            />
                                             <input
                                                 type="radio"
                                                 name="fat"
@@ -157,7 +183,14 @@ function CalcInput({
                                             />
                                         </div>
                                         <div className="calc__input--radio">
-                                            <img src="../../../src/assets/img/fat/3.svg" />
+                                            <img
+                                                src="../../../src/assets/img/fat/3.svg"
+                                                style={
+                                                    inputValue == "1"
+                                                        ? { opacity: 1 }
+                                                        : { opacity: 0.6 }
+                                                }
+                                            />
                                             <input
                                                 type="radio"
                                                 name="fat"
@@ -168,7 +201,14 @@ function CalcInput({
                                             />
                                         </div>
                                         <div className="calc__input--radio">
-                                            <img src="../../../src/assets/img/fat/4.svg" />
+                                            <img
+                                                src="../../../src/assets/img/fat/4.svg"
+                                                style={
+                                                    inputValue == "0.95"
+                                                        ? { opacity: 1 }
+                                                        : { opacity: 0.6 }
+                                                }
+                                            />
                                             <input
                                                 type="radio"
                                                 name="fat"
@@ -179,7 +219,14 @@ function CalcInput({
                                             />
                                         </div>
                                         <div className="calc__input--radio">
-                                            <img src="../../../src/assets/img/fat/5.svg" />
+                                            <img
+                                                src="../../../src/assets/img/fat/5.svg"
+                                                style={
+                                                    inputValue == "0.9"
+                                                        ? { opacity: 1 }
+                                                        : { opacity: 0.6 }
+                                                }
+                                            />
                                             <input
                                                 type="radio"
                                                 name="fat"
@@ -207,6 +254,7 @@ function CalcInput({
                                         onChange={(e) => handleRangeInput(e)}
                                         name="activity"
                                         id="activity"
+                                        value={inputValue}
                                     >
                                         <option value="0.8">Low</option>
                                         <option value="1">Medium</option>

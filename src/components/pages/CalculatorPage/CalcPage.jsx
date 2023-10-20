@@ -1,4 +1,10 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
+import useSaveData from "../../../assets/js/hooks/useSaveData"
+
+// firebase
+import { ref, get, child } from "firebase/database"
+import { db } from "../../../assets/js/firebase/firebase"
+import AuthContext from "../../../assets/js/authentication/auth-context"
 
 // styles
 import "../../../assets/scss/components/pages/CalculatorPage/_calc.scss"
@@ -15,6 +21,7 @@ import DailyResults from "./DailyResults"
 import fetchFood from "../../../utils/api"
 
 export default function CalcPage() {
+    const currentDate = new Date().toISOString().slice(0, 10)
     // inputs config
     const inputType = {
         boolean: "boolean",
@@ -43,22 +50,58 @@ export default function CalcPage() {
             weightMultiplier: 13.7,
             heightMultiplier: 5,
             ageMultiplier: 6.8,
+            gender: "male",
         },
         female: {
             cal: 655,
             weightMultiplier: 11.6,
             heightMultiplier: 3.5,
             ageMultiplier: 4.7,
+            gender: "female",
         },
     }
 
+    // firebase vars
+    const ctx = useContext(AuthContext)
+    const dbRef = ref(db)
+    const dataFromDB = useRef(null)
+
+    const ls = window.localStorage
+
     // inputs
-    const [inputGender, setInputGender] = useState(genders.male)
-    const [inputAgeValue, setInputAgeValue] = useState(50)
-    const [inputHeightValue, setInputHeightValue] = useState(180)
-    const [inputWeightValue, setInputWeightValue] = useState(80)
-    const [inputFatValue, setInputFatValue] = useState(1.1)
-    const [inputActivityValue, setInputActivityValue] = useState(1)
+    const [inputGender, setInputGender] = useSaveData(
+        "gender",
+        dataFromDB.current?.gender ??
+            JSON.parse(ls.getItem("gender")) ??
+            genders.male
+    )
+
+    const [inputAgeValue, setInputAgeValue] = useSaveData(
+        "age",
+        dataFromDB.current?.age ?? JSON.parse(ls.getItem("age")) ?? 30
+    )
+
+    const [inputHeightValue, setInputHeightValue] = useSaveData(
+        "height",
+        dataFromDB.current?.height ?? JSON.parse(ls.getItem("height")) ?? 180
+    )
+
+    const [inputWeightValue, setInputWeightValue] = useSaveData(
+        "weight",
+        dataFromDB.current?.calendar[currentDate]?.weight ??
+            JSON.parse(ls.getItem("weight")) ??
+            80
+    )
+
+    const [inputFatValue, setInputFatValue] = useSaveData(
+        "bodyFat",
+        dataFromDB.current?.bodyFat ?? JSON.parse(ls.getItem("bodyFat")) ?? 1
+    )
+
+    const [inputActivityValue, setInputActivityValue] = useSaveData(
+        "activity",
+        dataFromDB.current?.activity ?? JSON.parse(ls.getItem("activity")) ?? 1
+    )
 
     // bmi
     const [bmi, setBmi] = useState(0)
@@ -88,18 +131,27 @@ export default function CalcPage() {
     // exercise
     const [exerciseSelectInput, setExerciseSelectInput] = useState(0)
     const [exerciseTimeInput, setExerciseTimeInput] = useState(0)
-    const [caloriesBurned, setCaloriesBurned] = useState(0)
 
     // food intake
     const [foodInput, setFoodInput] = useState("")
     const [foodGramsInput, setFoodGramsInput] = useState(0)
-    const [caloriesConsumed, setCaloriesConsumed] = useState(0)
 
-    // nutrients %
-    const [carbsPercentage, setCarbsPercentage] = useState(0)
-    const [proteinsPercentage, setProteinsPercentage] = useState(0)
-    const [fatsPercentage, setFatsPercentage] = useState(0)
-    const [fiberPercentage, setFiberPercentage] = useState(0)
+    const [calendar, setCalendar] = useSaveData(
+        "calendar",
+        dataFromDB.current?.calendar ??
+            JSON.parse(ls.getItem("calendar")) ?? {
+                [currentDate]: {
+                    weight: 0,
+                    waistSize: "not set",
+                    carbs: 0,
+                    proteins: 0,
+                    fats: 0,
+                    fiber: 0,
+                    consumedCalories: 0,
+                    burnedCalories: 0,
+                },
+            }
+    )
 
     function calculateCalorieIntake() {
         setCalorieIntake(
@@ -161,17 +213,39 @@ export default function CalcPage() {
         )
     }
 
+    const [caloriesBurnedResultState, setCaloriesBurnedResultState] =
+        useState(0)
+
+    const [carbohydratesPresenrageState, setcarbohydratesPresenrageState] =
+        useState(0)
+    const [proteinsPresenrageState, setproteinsPresenrageState] = useState(0)
+    const [fatsPresenrageState, setfatsPresenrageState] = useState(0)
+    const [fiberPresenrageState, setfiberPresenrageState] = useState(0)
+    const [caloriesConsumedResultState, setcaloriesConsumedResultState] =
+        useState(0)
+
     function calculateCaloriesBurned(e) {
         e.preventDefault()
-        setCaloriesBurned(
-            Math.round(
-                caloriesBurned +
-                    (exerciseSelectInput *
-                        exerciseTimeInput *
-                        inputWeightValue) /
-                        150
-            )
+        const caloriesBurnedResult = Math.round(
+            calendar[currentDate].burnedCalories +
+                (exerciseSelectInput * exerciseTimeInput * inputWeightValue) /
+                    150
         )
+        setCaloriesBurnedResultState(caloriesBurnedResult)
+
+        setCalendar({
+            ...calendar,
+            [currentDate]: {
+                weight: 0,
+                waistSize: "not set",
+                carbs: carbohydratesPresenrageState,
+                proteins: proteinsPresenrageState,
+                fats: fatsPresenrageState,
+                fiber: fiberPresenrageState,
+                consumedCalories: caloriesConsumedResultState,
+                burnedCalories: caloriesBurnedResult,
+            },
+        })
         e.target.reset()
     }
 
@@ -184,38 +258,58 @@ export default function CalcPage() {
                 return
             }
 
-            console.log(result[0].food.nutrients)
-
             // calories
             const calories =
                 (result[0].food.nutrients.ENERC_KCAL * foodGramsInput) / 100
-            setCaloriesConsumed(Math.round(caloriesConsumed + calories))
+            const caloriesConsumedResult = Math.round(
+                calendar[currentDate].consumedCalories + calories
+            )
+            setcaloriesConsumedResultState(caloriesConsumedResult)
 
             // carbohydrates
             const carbohydrates =
                 (result[0].food.nutrients.CHOCDF * foodGramsInput) / 100
-            setCarbsPercentage(
-                Math.round(carbsPercentage + (carbohydrates * 100) / carbsGrams)
+            const carbohydratesPresenrage = Math.round(
+                calendar[currentDate].carbs + (carbohydrates * 100) / carbsGrams
             )
+            setcarbohydratesPresenrageState(carbohydratesPresenrage)
 
             // proteins
             const proteins =
                 (result[0].food.nutrients.PROCNT * foodGramsInput) / 100
-            setProteinsPercentage(
-                Math.round(proteinsPercentage + (proteins * 100) / proteinGrams)
+            const proteinsPresenrage = Math.round(
+                calendar[currentDate].proteins + (proteins * 100) / proteinGrams
             )
+            setproteinsPresenrageState(proteinsPresenrage)
 
             // fats
             const fats = (result[0].food.nutrients.FAT * foodGramsInput) / 100
-            setFatsPercentage(
-                Math.round(fatsPercentage + (fats * 100) / fatGrams)
+            const fatsPresenrage = Math.round(
+                calendar[currentDate].fats + (fats * 100) / fatGrams
             )
+            setfatsPresenrageState(fatsPresenrage)
+
             // fiber
             const fiber =
                 (result[0].food.nutrients.FIBTG * foodGramsInput) / 100
-            setFiberPercentage(
-                Math.round(fiberPercentage + (fiber * 100) / fiberGrams)
+            const fiberPresenrage = Math.round(
+                calendar[currentDate].fiber + (fiber * 100) / fiberGrams
             )
+            setfiberPresenrageState(fiber)
+
+            setCalendar({
+                ...calendar,
+                [currentDate]: {
+                    weight: 0,
+                    waistSize: "not set",
+                    carbs: carbohydratesPresenrage,
+                    proteins: proteinsPresenrage,
+                    fats: fatsPresenrage,
+                    fiber: fiberPresenrage,
+                    consumedCalories: caloriesConsumedResult,
+                    burnedCalories: caloriesBurnedResultState,
+                },
+            })
         })
         e.target.reset()
     }
@@ -225,43 +319,65 @@ export default function CalcPage() {
         calculateCalorieIntake()
         calculateCarbs()
         calculateNutrients()
+
+        // firebase
+        if (ctx.isLoggedIn) {
+            get(child(dbRef, `users/${ctx.uid}`)).then((snapshot) => {
+                if (snapshot.exists()) {
+                    dataFromDB.current = snapshot.val()
+                }
+            })
+        }
     })
 
     return (
         <>
             <section className="main__calc calc">
-                {/* только для залогиненых */}
-                <div className="main__calc--wrapper">
-                    <form onSubmit={(e) => calculateFood(e)}>
-                        <FoodInput
-                            setFoodGramsInput={setFoodGramsInput}
-                            setFoodInput={setFoodInput}
-                        />
-                    </form>
-                    <hr />
-                    <form onSubmit={(e) => calculateCaloriesBurned(e)}>
-                        <ExerciseInput
-                            setExerciseSelectInput={setExerciseSelectInput}
-                            setExerciseTimeInput={setExerciseTimeInput}
-                        />
-                    </form>
-                    {/* только для залогиненых */}
-                </div>
-                <div className="main__calc--wrapper">
-                    <DailyResults
-                        caloriesBurned={caloriesBurned}
-                        caloriesConsumed={caloriesConsumed}
-                        carbsPercentage={carbsPercentage}
-                        proteinsPercentage={proteinsPercentage}
-                        fatsPercentage={fatsPercentage}
-                        fiberPercentage={fiberPercentage}
-                    />
-                </div>
+                {ctx.isLoggedIn && (
+                    <>
+                        <div className="main__calc--wrapper">
+                            <form onSubmit={(e) => calculateFood(e)}>
+                                <FoodInput
+                                    setFoodGramsInput={setFoodGramsInput}
+                                    setFoodInput={setFoodInput}
+                                />
+                            </form>
+                            <hr />
+                            <form onSubmit={(e) => calculateCaloriesBurned(e)}>
+                                <ExerciseInput
+                                    setExerciseSelectInput={
+                                        setExerciseSelectInput
+                                    }
+                                    setExerciseTimeInput={setExerciseTimeInput}
+                                />
+                            </form>
+                        </div>
+
+                        <div className="main__calc--wrapper">
+                            {console.log(calendar[currentDate])}
+                            <DailyResults
+                                caloriesBurned={
+                                    calendar[currentDate].burnedCalories
+                                }
+                                caloriesConsumed={
+                                    calendar[currentDate].consumedCalories
+                                }
+                                carbsPercentage={calendar[currentDate].carbs}
+                                proteinsPercentage={
+                                    calendar[currentDate].proteins
+                                }
+                                fatsPercentage={calendar[currentDate].fats}
+                                fiberPercentage={calendar[currentDate].fiber}
+                            />
+                        </div>
+                    </>
+                )}
                 <div className="main__calc--wrapper">
                     <form action="#">
                         <CalcInput
                             genders={genders}
                             setInputGender={setInputGender}
+                            inputGender={inputGender}
                             inputType={inputType.boolean}
                             calculateCalorieIntake={calculateCalorieIntake}
                         />

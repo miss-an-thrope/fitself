@@ -1,40 +1,44 @@
-import { useEffect, useState } from "react";
-import { db } from "../../../assets/js/firebase/firebase";
-import {ref, get, child } from "firebase/database";
-import { NavLink } from "react-router-dom";
-export default function ProfilePage(){
-    const ls = window.localStorage;
-    const currentUser = JSON.parse(ls.getItem("currentUser"));
-    const uid = currentUser.uid;
-    
-    const [name, setName] = useState(currentUser.providerData[0].displayName);
-    const [email, setEmail] = useState(currentUser.email);
-    const [age, setAge] = useState("");
-    const [height, setHeight] = useState("");
-    const [weight, setWeight] = useState("");
+import "../../../assets/scss/components/pages/ProfilePage/_profile.scss"
+
+import { useEffect, useState } from "react"
+import { db } from "../../../assets/js/firebase/firebase"
+import { updateProfile } from "firebase/auth"
+import { ref, onValue, get, child } from "firebase/database"
+import { NavLink } from "react-router-dom"
+export default function ProfilePage() {
+    const ls = window.localStorage
+    const currentUser = JSON.parse(ls.getItem("currentUser"))
+    const uid = currentUser.uid
+
+    const [name, setName] = useState(currentUser.providerData[0].displayName)
+    const [email, setEmail] = useState(currentUser.email)
+    const [age, setAge] = useState("")
+    const [height, setHeight] = useState("")
+    const [weight, setWeight] = useState("")
     const [waistSize, setWaistSize] = useState("")
-    
+
     useEffect(() => {
-        const dbRef = ref(db);
-        get(child(dbRef, `users/${uid}`)).then((snapshot) => {
-          if (snapshot.exists()) {
-            const userInfo = snapshot.val();
-            setName(userInfo.name)
-            setAge(userInfo.age);
-            setHeight(userInfo.height);
-            setWeight(userInfo.initialWeight);
-            setWaistSize(userInfo.initialWaistSize)
-          } else {
-            console.log("No data available");
-          }
-        }).catch((error) => {
-          console.error(error);
-        });
-        
+        const dbRef = ref(db)
+        get(child(dbRef, `users/${uid}`))
+            .then((snapshot) => {
+                if (snapshot.exists()) {
+                    const userInfo = snapshot.val()
+                    setName(userInfo.name)
+                    setAge(userInfo.age)
+                    setHeight(userInfo.height)
+                    setWeight(userInfo.initialWeight)
+                    setWaistSize(userInfo.initialWaistSize)
+                } else {
+                    console.log("No data available")
+                }
+            })
+            .catch((error) => {
+                console.error(error)
+            })
     }, [])
-    return(
+    return (
         <>
-            <h1>Hello, {name ? name : email}</h1>
+            <h2 className="recipes__header">Hello, {name ? name : email}</h2>
             <table>
                 <thead>
                     <tr>
@@ -63,13 +67,12 @@ export default function ProfilePage(){
                         <td>{waistSize ? waistSize : "not set"}</td>
                     </tr>
                     <tr>
-                        <td colSpan="2"><NavLink to="/updateUsersData">Update data</NavLink></td>
-                    </tr> 
+                        <td colSpan="2">
+                            <NavLink to="/updateUsersData">Update data</NavLink>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
-
         </>
-            
-            
     )
 }

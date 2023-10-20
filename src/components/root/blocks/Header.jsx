@@ -21,7 +21,9 @@ export default function Header() {
                 <nav className="header__navbar navbar">
                     <ul className="navbar__list">
                         <li className="navbar__item">
-                            <NavLink to='recipes' className="navbar__link">Recipes</NavLink>
+                            <NavLink to="recipes" className="navbar__link">
+                                Recipes
+                            </NavLink>
                         </li>
                         <li className="navbar__item">
                             <NavLink to="/" className="navbar__link">
@@ -50,11 +52,12 @@ export default function Header() {
                         {authCtx.isLoggedIn && (
                             <li>
                                 <button
+                                    className="logout-btn"
                                     onClick={() => {
                                         logout(authCtx, navigateTo, auth)
                                     }}
                                 >
-                                    Log out
+                                    Log out ➡
                                 </button>
                             </li>
                         )}
