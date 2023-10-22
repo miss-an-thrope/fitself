@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react"
 import useSaveData from "../../../assets/js/hooks/useSaveData"
 
 // firebase
-import { ref, get, child } from "firebase/database"
+import { set, ref, get, child } from "firebase/database"
 import { db } from "../../../assets/js/firebase/firebase"
 import AuthContext from "../../../assets/js/authentication/auth-context"
 
@@ -136,22 +136,18 @@ export default function CalcPage() {
     const [foodInput, setFoodInput] = useState("")
     const [foodGramsInput, setFoodGramsInput] = useState(0)
 
-    const [calendar, setCalendar] = useSaveData(
-        "calendar",
-        dataFromDB.current?.calendar ??
-            JSON.parse(ls.getItem("calendar")) ?? {
-                [currentDate]: {
-                    weight: 0,
-                    waistSize: "not set",
-                    carbs: 0,
-                    proteins: 0,
-                    fats: 0,
-                    fiber: 0,
-                    consumedCalories: 0,
-                    burnedCalories: 0,
-                },
-            }
-    )
+    const [calendar, setCalendar] = useSaveData("calendar", {
+        [currentDate]: {
+            weight: 0,
+            waistSize: "not set",
+            carbs: 0,
+            proteins: 0,
+            fats: 0,
+            fiber: 0,
+            consumedCalories: 0,
+            burnedCalories: 0,
+        },
+    })
 
     function calculateCalorieIntake() {
         setCalorieIntake(
@@ -320,6 +316,22 @@ export default function CalcPage() {
         calculateCarbs()
         calculateNutrients()
 
+        if (!JSON.parse(ls.getItem("calendar"))[currentDate]) {
+            setCalendar({
+                ...JSON.parse(ls.getItem("calendar")),
+                [currentDate]: {
+                    weight: 0,
+                    waistSize: "not set",
+                    carbs: 0,
+                    proteins: 0,
+                    fats: 0,
+                    fiber: 0,
+                    consumedCalories: 0,
+                    burnedCalories: 0,
+                },
+            })
+        }
+
         // firebase
         if (ctx.isLoggedIn) {
             get(child(dbRef, `users/${ctx.uid}`)).then((snapshot) => {
@@ -354,7 +366,6 @@ export default function CalcPage() {
                         </div>
 
                         <div className="main__calc--wrapper">
-                            {console.log(calendar[currentDate])}
                             <DailyResults
                                 caloriesBurned={
                                     calendar[currentDate].burnedCalories
