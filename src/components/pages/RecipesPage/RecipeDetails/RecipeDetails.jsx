@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // React tools
 import { useEffect, useState } from 'react';
 import { AiFillPushpin } from "react-icons/ai";
@@ -15,7 +16,6 @@ import { fetchRecipe, fetchRecipes } from '../../../../utils/api';
 // components
 import RecipeCard from '../RecipeCard';
 import Loading from '../../../root/blocks/tools/Loading';
-
 
 const RecipeDetails = () => {
 
@@ -41,7 +41,7 @@ const RecipeDetails = () => {
       const data = await fetchRecipe(id);
       setRecipe(data);
 
-      const recommend = await fetchRecipes({ query: recipe?.label, limit: 3 });
+      const recommend = await fetchRecipes({ query: recipe?.label, from: 0, to: 2, });
       setRecipes(recommend);
 
       setLoading(false);

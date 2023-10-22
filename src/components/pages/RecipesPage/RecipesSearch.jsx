@@ -6,7 +6,7 @@ import '../../../assets/scss/components/pages/RecipesPage/_recipesSearch.scss';
 function RecipesSearch({
   type,
   placeholder,
-  required = false,
+  required = true,
   value,
   name,
   handleInputChange,
@@ -21,7 +21,7 @@ function RecipesSearch({
         name={name}
         placeholder={placeholder}
         value={value}
-        onChange={handleInputChange}
+        onChange={(e) => handleInputChange(e)}
         required={required}
 
       />

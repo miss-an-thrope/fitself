@@ -19,49 +19,57 @@ import Loading from '../../root/blocks/tools/Loading';
 import Button from '../../root/blocks/tools/Button';
 
 function RecipesPage() {
-
-  // Hooks configuration
+  // Setting Recipes
   const [recipes, setRecipes] = useState([]);
-  const [query, setQuery] = useState('Cake');
-  const [limit, setLimit] = useState(12);
+
+  // API getters:
+  const [query, setQuery] = useState('soup');
+  const [from, setFrom] = useState(0);
+  const [to, setTo] = useState(12);
+  // Control API Loading
+  const [initialLoad, setInitialLoad] = useState(true);
+  // Custom Loading
   const [loading, setLoading] = useState(false);
+  const [noRecipes, setNoRecipes] = useState(false);
 
   const handleChange = (e) => {
     setQuery(e.target.value);
+    setFrom(0);
+    setTo(12);
+  }
+
+  const handleSearchedRecipe = (e) => {   
+    e.preventDefault();
+    setNoRecipes(false);
+    setInitialLoad(true);
+    setRecipes([]);
+    fetchRecipe();
   }
 
   const fetchRecipe = async () => {
     try {
-      const data = await fetchRecipes({ query, limit });
-      setRecipes(data);
+      setLoading(true);
+      const data = await fetchRecipes({ query, from, to });
+      if (initialLoad) {
+        setRecipes(data);
+      } else {
+        setRecipes(prevRecipes => [...prevRecipes, ...data]);
+      }
+      setFrom(prevFrom => prevFrom + 12);
+      setTo(prevTo => prevTo + 12);
     } catch (error) {
       console.log(error);
     } finally {
-      setLoading(false)
+      setLoading(false);
+      setInitialLoad(false);
     }
   }
 
-  const handleSearchedRecipe = (e) => {
-    setLoading(true);
-    e.preventDefault()
-    
+  const showMore = () => to > 100 ? setNoRecipes(true) : fetchRecipe();
   
-
-    fetchRecipe();
-
-    setLoading(false);
-  }
-
-  const showMore = () => {
-    setLimit(prev => prev + 12)
-    fetchRecipe();
-    setLoading(false);
-  }
-
-
   useEffect(() => {
-    setLoading(true);
     fetchRecipe();
+    console.log("useEffect on")
   }, []);
 
   return (
@@ -88,9 +96,7 @@ function RecipesPage() {
           />
         </form>
 
-        {loading ? (
-          <Loading />
-        ) : recipes?.length > 0 ? (
+        {initialLoad && loading ? <Loading /> : recipes?.length > 0 ? (
           <>
             <section className='recipes__cards cards'>
               {recipes?.map((item, index) => (
@@ -98,6 +104,12 @@ function RecipesPage() {
               ))}
             </section>
 
+            {loading ? <Loading /> : null}
+            {noRecipes ? (
+              <>
+                <p className='noMoreRecipes'>There are no recipes available</p>
+              </>
+            ) : null}
             <Button
               title="Show More"
               handleClick={showMore}
@@ -110,7 +122,7 @@ function RecipesPage() {
 
       </section>
     </>
-  );
+  )
 }
 
 export default RecipesPage;

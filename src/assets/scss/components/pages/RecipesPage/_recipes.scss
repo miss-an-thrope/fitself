@@ -7,6 +7,7 @@
    &__header {
       padding-top: 30px;
       font-size: 32px;
+      font-weight: bold;
       text-align: center;
       color: rgba(13, 82, 13, 1);
    }
@@ -19,7 +20,7 @@
       // grid-template: 1fr / 0.33fr 0.33fr 0.33fr;
       gap: 50px;
    }
-
+   /* check in future*/
    &__more {
       color: rgba(13, 82, 13, 1);
       font-size: 18px;

@@ -12,7 +12,7 @@ import CalcPage from './pages/CalculatorPage/CalcPage';
 import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
 import SignInPage from './pages/SignInPage/SignInPage';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
-
+import UpdateDataPage from './pages/UpdateDataPage/UpdateDataPage';
 // => Static
 import Root from "./root/Root";
 import ErrorPage from "./pages/ErrorPage";
@@ -20,7 +20,7 @@ import ErrorPage from "./pages/ErrorPage";
 import RecipesPage from './pages/RecipesPage/RecipesPage';
 import RecipeDetails from './pages/RecipesPage/RecipeDetails/RecipeDetails';
 import RecipeError from './pages/RecipesPage/RecipeDetails/RecipeError';
-import UpdateDataPage from './pages/UpdateDataPage/UpdateDataPage';
+
 
 
 export default function App() {
